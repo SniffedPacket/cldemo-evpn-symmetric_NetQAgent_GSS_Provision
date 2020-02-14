@@ -1,0 +1,4 @@
+netq-agent:
+  port: 31980
+  server: 10.50.25.142
+  vrf: mgmt

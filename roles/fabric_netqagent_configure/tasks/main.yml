@@ -1,0 +1,25 @@
+---
+     # Add repo to install netq-agent
+    - name: Install netq-agent repo
+      apt_repository:
+        repo: deb http://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-latest
+        state: present
+     
+     # Apt install. of the netq-agent package
+    - name: Install netq-agent package
+      apt:
+        name: netq-agent
+        update_cache: yes
+        
+     #Push netq.yml file
+    - name: Copy netq.yml configuration file for onprem appliance
+      copy: src=config/netq.yml dest=/etc/netq/netq.yml
+
+
+    - name: Start netq-agent service in mgmt VRF
+      systemd:
+        state: started
+        name: netq-agent@mgmt
+        enabled: yes
+
+
