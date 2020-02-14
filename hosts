@@ -30,6 +30,12 @@ spine
 exit
 internetrouter
 
+[fabric_netqagent:children]
+leaf
+spine
+exit
+
+
 [all:vars]
 ansible_user=cumulus
 ansible_ssh_pass=CumulusLinux!

@@ -14,7 +14,12 @@
     - interface_configuration
     - routing_configuration
     - ntp_in_mgmt_vrf
-      
+
+- hosts: fabric_netqagent
+  become: yes
+  roles:
+    - fabric_netqagent_configure
+
 - hosts: servers
   user: cumulus
   become: yes
