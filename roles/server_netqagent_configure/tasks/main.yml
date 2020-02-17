@@ -1,0 +1,35 @@
+---
+
+    - name: Add an Apt signing key, uses whichever key is at the URL
+      apt_key:
+        url: https://apps3.cumulusnetworks.com/setup/cumulus-apps-deb.pubkey
+        state: present  
+
+     # Add repo to install netq-agent
+    - name: Install netq-agent repo
+      apt_repository:
+        repo: deb [arch=amd64] https://apps3.cumulusnetworks.com/repos/deb xenial netq-latest
+        state: present
+        filename: cumulus-apps-deb-xenial.list
+
+     # Apt install. of the netq-agent package
+    - name: Install netq-agent package
+      apt:
+        name: netq-agent
+        update_cache: yes
+
+     #Push netq.yml file
+    - name: Copy netq.yml configuration file for onprem appliance
+      copy: src=config/netq_server.yml dest=/etc/netq/netq.yml
+
+
+    - name: Start netq-agent service
+      systemd:
+        state: started
+        name: netq-agent
+        enabled: yes
+
+    - name: Restart rsyslog
+      systemd:
+        state: restarted
+        name: rsyslog

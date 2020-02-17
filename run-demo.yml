@@ -26,4 +26,5 @@
   become_method: sudo
   roles:
     - server_interface_configuration
+    - server_netqagent_configure
     
